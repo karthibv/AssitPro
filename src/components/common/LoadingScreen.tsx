@@ -9,7 +9,12 @@ interface LoadingScreenProps {
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ message = 'Loading...' }) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      accessible={true}
+      accessibilityRole="progressbar"
+      accessibilityLabel={message}
+      accessibilityLiveRegion="polite">
       <ActivityIndicator size="large" color={colors.primary} />
       <Text style={styles.text}>{message}</Text>
     </View>

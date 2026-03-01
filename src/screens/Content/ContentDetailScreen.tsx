@@ -59,7 +59,7 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loadingContainer} accessible={true} accessibilityLabel="Loading content details" accessibilityRole="progressbar">
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
@@ -80,9 +80,9 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header Section */}
       <View style={styles.header}>
-        <Text style={styles.title}>{currentContent.title}</Text>
+        <Text style={styles.title} accessibilityRole="header">{currentContent.title}</Text>
         {currentContent.errorCode ? (
-          <View style={styles.errorCodeBadge}>
+          <View style={styles.errorCodeBadge} accessible={true} accessibilityRole="text" accessibilityLabel={`Error code: ${currentContent.errorCode}`}>
             <Text style={styles.errorCodeLabel}>Error Code</Text>
             <Text style={styles.errorCodeValue}>{currentContent.errorCode}</Text>
           </View>
@@ -93,7 +93,7 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
       {/* Circuit Images Section */}
       {currentContent.imageUrls.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📷 Circuit Images</Text>
+          <Text style={styles.sectionTitle} accessibilityRole="header">📷 Circuit Images</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -103,9 +103,19 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
                 key={`image-${index}`}
                 style={styles.imageCard}
                 onPress={() => handleImagePress(index)}
-                activeOpacity={0.8}>
-                <Image source={{ uri: url }} style={styles.thumbnail} resizeMode="cover" />
-                <Text style={styles.imageTapHint}>Tap to view full screen</Text>
+                activeOpacity={0.8}
+                accessible={true}
+                accessibilityRole="imagebutton"
+                accessibilityLabel={`Circuit image ${index + 1} of ${currentContent.imageUrls.length}`}
+                accessibilityHint="Double tap to view full screen with zoom">
+                <Image
+                  source={{ uri: url }}
+                  style={styles.thumbnail}
+                  resizeMode="cover"
+                  accessible={true}
+                  accessibilityLabel={`Circuit diagram ${index + 1}`}
+                />
+                <Text style={styles.imageTapHint} importantForAccessibility="no">Tap to view full screen</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -115,21 +125,25 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
       {/* Videos Section */}
       {currentContent.videoUrls.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🎬 Training Videos</Text>
+          <Text style={styles.sectionTitle} accessibilityRole="header">🎬 Training Videos</Text>
           {currentContent.videoUrls.map((url, index) => (
             <TouchableOpacity
               key={`video-${index}`}
               style={styles.videoCard}
               onPress={() => handleVideoPress(url)}
-              activeOpacity={0.7}>
-              <View style={styles.videoPlayIcon}>
+              activeOpacity={0.7}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Training video ${index + 1} of ${currentContent.videoUrls.length}`}
+              accessibilityHint="Double tap to play this training video">
+              <View style={styles.videoPlayIcon} importantForAccessibility="no">
                 <Text style={styles.playIconText}>▶</Text>
               </View>
               <View style={styles.videoInfo}>
                 <Text style={styles.videoTitle}>
                   Video {index + 1}
                 </Text>
-                <Text style={styles.videoSubtitle}>Tap to play</Text>
+                <Text style={styles.videoSubtitle} importantForAccessibility="no">Tap to play</Text>
               </View>
             </TouchableOpacity>
           ))}
@@ -139,10 +153,10 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
       {/* Repair Steps Section */}
       {currentContent.steps.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📋 Repair Steps</Text>
+          <Text style={styles.sectionTitle} accessibilityRole="header">📋 Repair Steps</Text>
           {currentContent.steps.map((step, index) => (
-            <View key={`step-${index}`} style={styles.stepItem}>
-              <View style={styles.stepNumber}>
+            <View key={`step-${index}`} style={styles.stepItem} accessible={true} accessibilityRole="text" accessibilityLabel={`Step ${index + 1}: ${step}`}>
+              <View style={styles.stepNumber} importantForAccessibility="no">
                 <Text style={styles.stepNumberText}>{index + 1}</Text>
               </View>
               <Text style={styles.stepText}>{step}</Text>
@@ -154,10 +168,10 @@ const ContentDetailScreen: React.FC<ContentDetailScreenProps> = ({ navigation, r
       {/* Tools Required Section */}
       {currentContent.tools.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🔧 Tools Required</Text>
+          <Text style={styles.sectionTitle} accessibilityRole="header">🔧 Tools Required</Text>
           <View style={styles.toolsGrid}>
             {currentContent.tools.map((tool, index) => (
-              <View key={`tool-${index}`} style={styles.toolChip}>
+              <View key={`tool-${index}`} style={styles.toolChip} accessible={true} accessibilityRole="text" accessibilityLabel={`Tool: ${tool}`}>
                 <Text style={styles.toolText}>{tool}</Text>
               </View>
             ))}

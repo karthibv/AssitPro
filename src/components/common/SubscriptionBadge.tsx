@@ -9,10 +9,15 @@ interface SubscriptionBadgeProps {
 }
 
 const SubscriptionBadge: React.FC<SubscriptionBadgeProps> = ({ isActive, type }) => {
+  const label = isActive ? `${type.charAt(0).toUpperCase() + type.slice(1)} Plan` : 'Free Plan';
   return (
-    <View style={[styles.badge, isActive ? styles.activeBadge : styles.inactiveBadge]}>
+    <View
+      style={[styles.badge, isActive ? styles.activeBadge : styles.inactiveBadge]}
+      accessible={true}
+      accessibilityRole="text"
+      accessibilityLabel={`Subscription status: ${label}`}>
       <Text style={[styles.text, isActive ? styles.activeText : styles.inactiveText]}>
-        {isActive ? `${type.charAt(0).toUpperCase() + type.slice(1)} Plan` : 'Free Plan'}
+        {label}
       </Text>
     </View>
   );

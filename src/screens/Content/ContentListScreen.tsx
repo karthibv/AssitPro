@@ -40,13 +40,17 @@ const ContentListScreen: React.FC<ContentListScreenProps> = ({ navigation, route
   };
 
   const renderContentItem = ({ item }: { item: ContentItem }) => (
-    <Card style={styles.contentCard} onPress={() => handleContentPress(item.id)}>
+    <Card
+      style={styles.contentCard}
+      onPress={() => handleContentPress(item.id)}
+      accessibilityLabel={`${item.title}${item.errorCode ? `, error code ${item.errorCode}` : ''}`}
+      accessibilityHint="Double tap to view repair guide details">
       <View style={styles.cardHeader}>
         <Text style={styles.contentTitle} numberOfLines={2}>
           {item.title}
         </Text>
         {item.errorCode ? (
-          <View style={styles.errorCodeBadge}>
+          <View style={styles.errorCodeBadge} accessible={true} accessibilityRole="text" accessibilityLabel={`Error code: ${item.errorCode}`}>
             <Text style={styles.errorCodeText}>{item.errorCode}</Text>
           </View>
         ) : null}
@@ -56,25 +60,25 @@ const ContentListScreen: React.FC<ContentListScreenProps> = ({ navigation, route
         {item.description}
       </Text>
 
-      <View style={styles.metaRow}>
+      <View style={styles.metaRow} accessible={true} accessibilityLabel={`${item.steps.length} steps, ${item.tools.length} tools, ${item.imageUrls.length} images, ${item.videoUrls.length} videos`}>
         {item.steps.length > 0 && (
           <View style={styles.metaItem}>
-            <Text style={styles.metaText}>📋 {item.steps.length} steps</Text>
+            <Text style={styles.metaText} importantForAccessibility="no">📋 {item.steps.length} steps</Text>
           </View>
         )}
         {item.tools.length > 0 && (
           <View style={styles.metaItem}>
-            <Text style={styles.metaText}>🔧 {item.tools.length} tools</Text>
+            <Text style={styles.metaText} importantForAccessibility="no">🔧 {item.tools.length} tools</Text>
           </View>
         )}
         {item.imageUrls.length > 0 && (
           <View style={styles.metaItem}>
-            <Text style={styles.metaText}>📷 {item.imageUrls.length}</Text>
+            <Text style={styles.metaText} importantForAccessibility="no">📷 {item.imageUrls.length}</Text>
           </View>
         )}
         {item.videoUrls.length > 0 && (
           <View style={styles.metaItem}>
-            <Text style={styles.metaText}>🎬 {item.videoUrls.length}</Text>
+            <Text style={styles.metaText} importantForAccessibility="no">🎬 {item.videoUrls.length}</Text>
           </View>
         )}
       </View>
@@ -83,7 +87,7 @@ const ContentListScreen: React.FC<ContentListScreenProps> = ({ navigation, route
 
   if (isLoading && contents.length === 0) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loadingContainer} accessible={true} accessibilityLabel="Loading content" accessibilityRole="progressbar">
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );

@@ -26,6 +26,8 @@ interface InputProps {
   style?: ViewStyle;
   onSubmitEditing?: () => void;
   returnKeyType?: 'done' | 'go' | 'next' | 'search' | 'send';
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -43,6 +45,8 @@ const Input: React.FC<InputProps> = ({
   style,
   onSubmitEditing,
   returnKeyType,
+  accessibilityLabel,
+  accessibilityHint,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -73,16 +77,34 @@ const Input: React.FC<InputProps> = ({
           onBlur={() => setIsFocused(false)}
           onSubmitEditing={onSubmitEditing}
           returnKeyType={returnKeyType}
+          accessible={true}
+          accessibilityLabel={accessibilityLabel ?? label ?? placeholder}
+          accessibilityHint={accessibilityHint}
+          accessibilityState={{ disabled: !editable }}
+          aria-invalid={!!error}
+          aria-errormessage={error}
         />
         {secureTextEntry && (
           <TouchableOpacity
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-            style={styles.eyeButton}>
+            style={styles.eyeButton}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={isPasswordVisible ? 'Hide password' : 'Show password'}
+            accessibilityHint="Toggles password visibility">
             <Text style={styles.eyeText}>{isPasswordVisible ? 'Hide' : 'Show'}</Text>
           </TouchableOpacity>
         )}
       </View>
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {error && (
+        <Text
+          style={styles.errorText}
+          accessible={true}
+          accessibilityRole="alert"
+          accessibilityLiveRegion="assertive">
+          {error}
+        </Text>
+      )}
     </View>
   );
 };

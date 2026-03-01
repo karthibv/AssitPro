@@ -78,7 +78,7 @@ const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ navigation, route
         />
 
         {isLoading && (
-          <View style={styles.loadingOverlay}>
+          <View style={styles.loadingOverlay} accessible={true} accessibilityRole="progressbar" accessibilityLabel="Loading video">
             <ActivityIndicator size="large" color="#fff" />
           </View>
         )}
@@ -90,22 +90,32 @@ const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({ navigation, route
             <View style={styles.topBar}>
               <TouchableOpacity
                 style={styles.backButton}
-                onPress={() => navigation.goBack()}>
+                onPress={() => navigation.goBack()}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Go back"
+                accessibilityHint="Double tap to return to previous screen">
                 <Text style={styles.backText}>← Back</Text>
               </TouchableOpacity>
-              <Text style={styles.videoTitle} numberOfLines={1}>
+              <Text style={styles.videoTitle} numberOfLines={1} accessibilityRole="header">
                 {title}
               </Text>
               <View style={styles.placeholder} />
             </View>
 
             {/* Center Play/Pause */}
-            <TouchableOpacity style={styles.centerButton} onPress={togglePlayPause}>
-              <Text style={styles.centerButtonText}>{isPaused ? '▶' : '⏸'}</Text>
+            <TouchableOpacity
+              style={styles.centerButton}
+              onPress={togglePlayPause}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={isPaused ? 'Play video' : 'Pause video'}
+              accessibilityHint="Double tap to toggle playback">
+              <Text style={styles.centerButtonText} importantForAccessibility="no">{isPaused ? '▶' : '⏸'}</Text>
             </TouchableOpacity>
 
             {/* Bottom Bar */}
-            <View style={styles.bottomBar}>
+            <View style={styles.bottomBar} accessible={true} accessibilityRole="adjustable" accessibilityLabel={`Video progress: ${formatTime(currentTime)} of ${formatTime(duration)}`} accessibilityValue={{ min: 0, max: Math.floor(duration), now: Math.floor(currentTime), text: `${formatTime(currentTime)} of ${formatTime(duration)}` }}>
               <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
               <View style={styles.progressBar}>
                 <View

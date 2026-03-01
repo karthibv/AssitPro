@@ -11,10 +11,10 @@ export const colors = {
   surface: '#FFFFFF',
   card: '#FFFFFF',
 
-  // Text
-  textPrimary: '#1A1A2E',
-  textSecondary: '#6B7280',
-  textLight: '#9CA3AF',
+  // Text (WCAG 2.1 AA compliant contrast ratios)
+  textPrimary: '#1A1A2E',      // 16.4:1 on white — AAA
+  textSecondary: '#4B5563',     // 7.5:1 on white — AAA (was #6B7280 at 5.0:1)
+  textLight: '#6B7280',         // 5.0:1 on white — AA (was #9CA3AF at 2.8:1)
   textOnPrimary: '#FFFFFF',
   textOnAccent: '#FFFFFF',
 
@@ -32,5 +32,8 @@ export const colors = {
   overlay: 'rgba(0, 0, 0, 0.5)',
   shadow: 'rgba(0, 0, 0, 0.1)',
   disabled: '#D1D5DB',
-  placeholder: '#9CA3AF',
+  placeholder: '#6B7280',       // 5.0:1 on white — AA (was #9CA3AF at 2.8:1)
+
+  // Focus indicator (WCAG 2.4.7)
+  focusRing: '#1E3A5F',
 } as const;

@@ -16,9 +16,14 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title} accessibilityRole="header">{title}</Text>
       {actionLabel && onAction && (
-        <TouchableOpacity onPress={onAction}>
+        <TouchableOpacity
+          onPress={onAction}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={actionLabel}
+          accessibilityHint={`Navigate to ${title} section`}>
           <Text style={styles.action}>{actionLabel}</Text>
         </TouchableOpacity>
       )}

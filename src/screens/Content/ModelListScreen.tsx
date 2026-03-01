@@ -42,8 +42,12 @@ const ModelListScreen: React.FC<ModelListScreenProps> = ({ navigation, route }) 
           brandId,
         })
       }
-      activeOpacity={0.7}>
-      <View style={styles.modelIconContainer}>
+      activeOpacity={0.7}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${item.name} model`}
+      accessibilityHint={`Double tap to view repair guides for ${item.name}`}>
+      <View style={styles.modelIconContainer} importantForAccessibility="no">
         <Text style={styles.modelIcon}>🔧</Text>
       </View>
       <View style={styles.modelInfo}>
@@ -55,7 +59,7 @@ const ModelListScreen: React.FC<ModelListScreenProps> = ({ navigation, route }) 
 
   if (isLoading && models.length === 0) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loadingContainer} accessible={true} accessibilityLabel="Loading models" accessibilityRole="progressbar">
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
