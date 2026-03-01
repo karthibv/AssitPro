@@ -61,19 +61,20 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation 
   if (emailSent) {
     return (
       <View style={styles.container}>
-        <View style={styles.successContainer}>
-          <Text style={styles.successIcon}>📧</Text>
-          <Text style={styles.successTitle}>Check Your Email</Text>
-          <Text style={styles.successDescription}>
-            We&apos;ve sent a password reset link to{'\n'}
-            <Text style={styles.emailHighlight}>{email}</Text>
-          </Text>
-          <Button
-            title="Back to Login"
-            onPress={() => navigation.navigate('Login')}
-            style={styles.backButton}
-          />
-        </View>
+          <View style={styles.successContainer} accessible={true} accessibilityLiveRegion="polite">
+            <Text style={styles.successIcon} importantForAccessibility="no">📧</Text>
+            <Text style={styles.successTitle} accessibilityRole="header">Check Your Email</Text>
+            <Text style={styles.successDescription}>
+              We&apos;ve sent a password reset link to{'\n'}
+              <Text style={styles.emailHighlight}>{email}</Text>
+            </Text>
+            <Button
+              title="Back to Login"
+              onPress={() => navigation.navigate('Login')}
+              style={styles.backButton}
+              accessibilityHint="Double tap to return to the login screen"
+            />
+          </View>
       </View>
     );
   }
@@ -86,7 +87,7 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation 
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled">
         <View style={styles.form}>
-          <Text style={styles.title}>Reset Password</Text>
+          <Text style={styles.title} accessibilityRole="header">Reset Password</Text>
           <Text style={styles.description}>
             Enter your email address and we&apos;ll send you a link to reset your password.
           </Text>
@@ -101,6 +102,8 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation 
             error={emailError}
             returnKeyType="done"
             onSubmitEditing={handleResetPassword}
+            accessibilityLabel="Email address"
+            accessibilityHint="Enter the email address associated with your account"
           />
 
           <Button
@@ -108,12 +111,14 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation 
             onPress={handleResetPassword}
             isLoading={isLoading}
             style={styles.resetButton}
+            accessibilityHint="Double tap to send a password reset email"
           />
 
           <Button
             title="Back to Login"
             onPress={() => navigation.navigate('Login')}
             variant="text"
+            accessibilityHint="Double tap to return to the login screen"
           />
         </View>
       </ScrollView>

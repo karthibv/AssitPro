@@ -137,12 +137,16 @@ const ImageViewerScreen: React.FC<ImageViewerScreenProps> = ({ navigation, route
       {/* Close Button */}
       <TouchableOpacity
         style={styles.closeButton}
-        onPress={() => navigation.goBack()}>
-        <Text style={styles.closeText}>✕</Text>
+        onPress={() => navigation.goBack()}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel="Close image viewer"
+        accessibilityHint="Double tap to go back to the previous screen">
+        <Text style={styles.closeText} importantForAccessibility="no">✕</Text>
       </TouchableOpacity>
 
       {/* Image Counter */}
-      <View style={styles.counter}>
+      <View style={styles.counter} accessible={true} accessibilityRole="text" accessibilityLabel={`Image ${currentIndex + 1} of ${imageUrls.length}`} accessibilityLiveRegion="polite">
         <Text style={styles.counterText}>
           {currentIndex + 1} / {imageUrls.length}
         </Text>
@@ -163,15 +167,15 @@ const ImageViewerScreen: React.FC<ImageViewerScreenProps> = ({ navigation, route
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
         keyExtractor={(_, index) => `image-${index}`}
-        renderItem={({ item }) => (
-          <View style={styles.slide}>
+        renderItem={({ item, index }) => (
+          <View style={styles.slide} accessible={true} accessibilityRole="image" accessibilityLabel={`Circuit image ${index + 1} of ${imageUrls.length}. Pinch to zoom, double tap to toggle zoom, swipe for next image`}>
             <ZoomableImage uri={item} />
           </View>
         )}
       />
 
       {/* Hint */}
-      <View style={styles.hintContainer}>
+      <View style={styles.hintContainer} importantForAccessibility="no">
         <Text style={styles.hintText}>Pinch to zoom • Double tap to toggle • Swipe for next</Text>
       </View>
     </GestureHandlerRootView>

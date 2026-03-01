@@ -73,13 +73,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled">
-        <View style={styles.header}>
-          <Text style={styles.logo}>⚡ AssistPro</Text>
+        <View style={styles.header} accessible={true} accessibilityRole="header">
+          <Text style={styles.logo} accessibilityRole="header">⚡ AssistPro</Text>
           <Text style={styles.subtitle}>AC Technician Learning & Service Assistant</Text>
         </View>
 
         <View style={styles.form}>
-          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={styles.title} accessibilityRole="header">Welcome Back</Text>
           <Text style={styles.description}>Sign in to continue</Text>
 
           <Input
@@ -91,6 +91,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             autoCapitalize="none"
             error={emailError}
             returnKeyType="next"
+            accessibilityLabel="Email address"
+            accessibilityHint="Enter your email address to sign in"
           />
 
           <Input
@@ -102,6 +104,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             error={passwordError}
             returnKeyType="done"
             onSubmitEditing={handleLogin}
+            accessibilityLabel="Password"
+            accessibilityHint="Enter your password to sign in"
           />
 
           <Button
@@ -109,21 +113,24 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             onPress={handleLogin}
             isLoading={isLoading}
             style={styles.loginButton}
+            accessibilityHint="Double tap to sign in to your account"
           />
 
           <Button
             title="Forgot Password?"
             onPress={() => navigation.navigate('ForgotPassword')}
             variant="text"
+            accessibilityHint="Double tap to reset your password"
           />
 
-          <View style={styles.signupRow}>
+          <View style={styles.signupRow} accessible={true} accessibilityRole="text">
             <Text style={styles.signupText}>Don&apos;t have an account? </Text>
             <Button
               title="Sign Up"
               onPress={() => navigation.navigate('Signup')}
               variant="text"
               textStyle={styles.signupLink}
+              accessibilityHint="Double tap to create a new account"
             />
           </View>
         </View>

@@ -28,7 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.icon}>🔍</Text>
+      <Text style={styles.icon} importantForAccessibility="no">🔍</Text>
       <TextInput
         style={styles.input}
         placeholder={placeholder}
@@ -40,9 +40,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
         autoFocus={autoFocus}
         autoCapitalize="none"
         autoCorrect={false}
+        accessible={true}
+        accessibilityRole="search"
+        accessibilityLabel="Search field"
+        accessibilityHint={placeholder}
       />
       {value.length > 0 && (
-        <TouchableOpacity onPress={onClear} style={styles.clearButton}>
+        <TouchableOpacity
+          onPress={onClear}
+          style={styles.clearButton}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Clear search"
+          accessibilityHint="Clears the current search text">
           <Text style={styles.clearText}>✕</Text>
         </TouchableOpacity>
       )}

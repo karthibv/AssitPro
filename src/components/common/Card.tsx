@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, ViewStyle } from 'react-native';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/spacing';
 
@@ -7,24 +7,30 @@ interface CardProps {
   children: React.ReactNode;
   onPress?: () => void;
   style?: ViewStyle;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }
 
-const Card: React.FC<CardProps> = ({ children, onPress, style }) => {
+const Card: React.FC<CardProps> = ({ children, onPress, style, accessibilityLabel, accessibilityHint }) => {
   if (onPress) {
     return (
       <TouchableOpacity
         style={[styles.card, style]}
         onPress={onPress}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}>
         {children}
       </TouchableOpacity>
     );
   }
 
   return (
-    <TouchableOpacity style={[styles.card, style]} activeOpacity={1}>
+    <View style={[styles.card, style]} accessible={false}>
       {children}
-    </TouchableOpacity>
+    </View>
   );
 };
 

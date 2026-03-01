@@ -63,13 +63,17 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   };
 
   const renderResultItem = ({ item }: { item: ContentItem }) => (
-    <Card style={styles.resultCard} onPress={() => handleContentPress(item.id)}>
+    <Card
+      style={styles.resultCard}
+      onPress={() => handleContentPress(item.id)}
+      accessibilityLabel={`${item.title}${item.errorCode ? `, error code ${item.errorCode}` : ''}`}
+      accessibilityHint="Double tap to view repair guide details">
       <View style={styles.resultHeader}>
         <Text style={styles.resultTitle} numberOfLines={2}>
           {item.title}
         </Text>
         {item.errorCode ? (
-          <View style={styles.errorCodeBadge}>
+          <View style={styles.errorCodeBadge} accessible={true} accessibilityRole="text" accessibilityLabel={`Error code: ${item.errorCode}`}>
             <Text style={styles.errorCodeText}>{item.errorCode}</Text>
           </View>
         ) : null}
@@ -77,15 +81,15 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
       <Text style={styles.resultDescription} numberOfLines={2}>
         {item.description}
       </Text>
-      <View style={styles.resultMeta}>
+      <View style={styles.resultMeta} accessible={true} accessibilityLabel={`${item.steps.length} steps, ${item.imageUrls.length} images, ${item.videoUrls.length} videos`}>
         {item.steps.length > 0 && (
-          <Text style={styles.metaText}>📋 {item.steps.length} steps</Text>
+          <Text style={styles.metaText} importantForAccessibility="no">📋 {item.steps.length} steps</Text>
         )}
         {item.imageUrls.length > 0 && (
-          <Text style={styles.metaText}>📷 {item.imageUrls.length} images</Text>
+          <Text style={styles.metaText} importantForAccessibility="no">📷 {item.imageUrls.length} images</Text>
         )}
         {item.videoUrls.length > 0 && (
-          <Text style={styles.metaText}>🎬 {item.videoUrls.length} videos</Text>
+          <Text style={styles.metaText} importantForAccessibility="no">🎬 {item.videoUrls.length} videos</Text>
         )}
       </View>
     </Card>
@@ -95,7 +99,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     // Show loading state
     if (isSearching) {
       return (
-        <View style={styles.centerContainer}>
+        <View style={styles.centerContainer} accessible={true} accessibilityRole="progressbar" accessibilityLabel="Searching" accessibilityLiveRegion="polite">
           <ActivityIndicator size="large" color={colors.primary} />
           <Text style={styles.searchingText}>Searching...</Text>
         </View>
@@ -112,7 +116,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
           contentContainerStyle={styles.resultsList}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           ListHeaderComponent={
-            <Text style={styles.resultsCount}>
+            <Text style={styles.resultsCount} accessibilityRole="header" accessibilityLiveRegion="polite">
               {results.length} result{results.length !== 1 ? 's' : ''} found
             </Text>
           }
@@ -135,7 +139,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     // Show search suggestions & history
     return (
       <View style={styles.suggestionsContainer}>
-        <Text style={styles.suggestionsTitle}>Search Tips</Text>
+        <Text style={styles.suggestionsTitle} accessibilityRole="header">Search Tips</Text>
         <View style={styles.tipsList}>
           <Text style={styles.tipItem}>• Search by error code (e.g., E1, F3)</Text>
           <Text style={styles.tipItem}>• Search by symptom (e.g., &quot;not cooling&quot;)</Text>
@@ -146,8 +150,13 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         {searchHistory.length > 0 && (
           <View style={styles.historySection}>
             <View style={styles.historyHeader}>
-              <Text style={styles.historyTitle}>Recent Searches</Text>
-              <TouchableOpacity onPress={clearHistory}>
+              <Text style={styles.historyTitle} accessibilityRole="header">Recent Searches</Text>
+              <TouchableOpacity
+                onPress={clearHistory}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Clear search history"
+                accessibilityHint="Double tap to clear all recent searches">
                 <Text style={styles.clearHistoryText}>Clear</Text>
               </TouchableOpacity>
             </View>
@@ -155,8 +164,12 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
               <TouchableOpacity
                 key={`history-${index}`}
                 style={styles.historyItem}
-                onPress={() => handleHistoryItemPress(item)}>
-                <Text style={styles.historyIcon}>🕐</Text>
+                onPress={() => handleHistoryItemPress(item)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`Search for ${item}`}
+                accessibilityHint="Double tap to search for this term again">
+                <Text style={styles.historyIcon} importantForAccessibility="no">🕐</Text>
                 <Text style={styles.historyText}>{item}</Text>
               </TouchableOpacity>
             ))}
@@ -169,7 +182,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.searchHeader}>
-        <Text style={styles.screenTitle}>Search</Text>
+        <Text style={styles.screenTitle} accessibilityRole="header">Search</Text>
         <SearchBar
           value={query}
           onChangeText={setQuery}

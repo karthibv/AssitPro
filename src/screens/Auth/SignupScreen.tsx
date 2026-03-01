@@ -89,12 +89,12 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled">
-        <View style={styles.header}>
-          <Text style={styles.logo}>⚡ AssistPro</Text>
+        <View style={styles.header} accessible={true} accessibilityRole="header">
+          <Text style={styles.logo} accessibilityRole="header">⚡ AssistPro</Text>
         </View>
 
         <View style={styles.form}>
-          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.title} accessibilityRole="header">Create Account</Text>
           <Text style={styles.description}>
             Join AssistPro to access AC repair guides and tutorials
           </Text>
@@ -107,6 +107,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             autoCapitalize="words"
             error={nameError}
             returnKeyType="next"
+            accessibilityLabel="Full name"
+            accessibilityHint="Enter your full name for your account"
           />
 
           <Input
@@ -118,6 +120,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             autoCapitalize="none"
             error={emailError}
             returnKeyType="next"
+            accessibilityLabel="Email address"
+            accessibilityHint="Enter your email address for your account"
           />
 
           <Input
@@ -128,6 +132,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             secureTextEntry
             error={passwordError}
             returnKeyType="next"
+            accessibilityLabel="Password"
+            accessibilityHint="Create a password with at least 6 characters"
           />
 
           <Input
@@ -139,6 +145,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             error={confirmPasswordError}
             returnKeyType="done"
             onSubmitEditing={handleSignup}
+            accessibilityLabel="Confirm password"
+            accessibilityHint="Re-enter your password to confirm"
           />
 
           <Button
@@ -146,15 +154,17 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             onPress={handleSignup}
             isLoading={isLoading}
             style={styles.signupButton}
+            accessibilityHint="Double tap to create your account"
           />
 
-          <View style={styles.loginRow}>
+          <View style={styles.loginRow} accessible={true} accessibilityRole="text">
             <Text style={styles.loginText}>Already have an account? </Text>
             <Button
               title="Sign In"
               onPress={() => navigation.navigate('Login')}
               variant="text"
               textStyle={styles.loginLink}
+              accessibilityHint="Double tap to go to sign in screen"
             />
           </View>
         </View>

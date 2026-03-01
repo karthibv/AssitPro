@@ -33,8 +33,12 @@ const BrandListScreen: React.FC<BrandListScreenProps> = ({ navigation }) => {
       onPress={() =>
         navigation.navigate('ModelList', { brandId: item.id, brandName: item.name })
       }
-      activeOpacity={0.7}>
-      <View style={styles.brandIcon}>
+      activeOpacity={0.7}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${item.name} brand`}
+      accessibilityHint={`Double tap to view ${item.name} AC models`}>
+      <View style={styles.brandIcon} importantForAccessibility="no">
         <Text style={styles.brandInitial}>{item.name.charAt(0).toUpperCase()}</Text>
       </View>
       <View style={styles.brandInfo}>
@@ -46,7 +50,7 @@ const BrandListScreen: React.FC<BrandListScreenProps> = ({ navigation }) => {
 
   if (isLoading && brands.length === 0) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loadingContainer} accessible={true} accessibilityLabel="Loading brands" accessibilityRole="progressbar">
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );

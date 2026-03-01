@@ -68,8 +68,12 @@ const HomeScreen: React.FC = () => {
           });
         }
       }}
-      activeOpacity={0.7}>
-      <View style={styles.brandIconContainer}>
+      activeOpacity={0.7}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${item.name} brand`}
+      accessibilityHint={`Double tap to view ${item.name} models`}>
+      <View style={styles.brandIconContainer} importantForAccessibility="no">
         <Text style={styles.brandIcon}>{item.name.charAt(0).toUpperCase()}</Text>
       </View>
       <Text style={styles.brandName} numberOfLines={1}>
@@ -79,10 +83,14 @@ const HomeScreen: React.FC = () => {
   );
 
   const renderContentCard = ({ item }: { item: ContentItem }) => (
-    <Card style={styles.contentCard} onPress={() => handleContentPress(item.id)}>
+    <Card
+      style={styles.contentCard}
+      onPress={() => handleContentPress(item.id)}
+      accessibilityLabel={`${item.title}${item.errorCode ? `, error code ${item.errorCode}` : ''}`}
+      accessibilityHint="Double tap to view repair guide details">
       <View style={styles.contentCardHeader}>
         {item.errorCode ? (
-          <View style={styles.errorCodeBadge}>
+          <View style={styles.errorCodeBadge} accessible={true} accessibilityRole="text" accessibilityLabel={`Error code: ${item.errorCode}`}>
             <Text style={styles.errorCodeText}>{item.errorCode}</Text>
           </View>
         ) : null}
@@ -93,15 +101,15 @@ const HomeScreen: React.FC = () => {
       <Text style={styles.contentDescription} numberOfLines={2}>
         {item.description}
       </Text>
-      <View style={styles.contentMeta}>
+      <View style={styles.contentMeta} accessible={true} accessibilityLabel={`${item.imageUrls.length > 0 ? `${item.imageUrls.length} images` : ''}${item.videoUrls.length > 0 ? `, ${item.videoUrls.length} videos` : ''}${item.steps.length > 0 ? `, ${item.steps.length} steps` : ''}`}>
         {item.imageUrls.length > 0 && (
-          <Text style={styles.metaItem}>📷 {item.imageUrls.length}</Text>
+          <Text style={styles.metaItem} importantForAccessibility="no">📷 {item.imageUrls.length}</Text>
         )}
         {item.videoUrls.length > 0 && (
-          <Text style={styles.metaItem}>🎬 {item.videoUrls.length}</Text>
+          <Text style={styles.metaItem} importantForAccessibility="no">🎬 {item.videoUrls.length}</Text>
         )}
         {item.steps.length > 0 && (
-          <Text style={styles.metaItem}>📋 {item.steps.length} steps</Text>
+          <Text style={styles.metaItem} importantForAccessibility="no">📋 {item.steps.length} steps</Text>
         )}
       </View>
     </Card>
@@ -117,8 +125,8 @@ const HomeScreen: React.FC = () => {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTop}>
-          <View>
-            <Text style={styles.greeting}>
+          <View accessible={true}>
+            <Text style={styles.greeting} accessibilityRole="header">
               Hello, {user?.name?.split(' ')[0] ?? 'Technician'} 👋
             </Text>
             <Text style={styles.headerSubtitle}>Find AC repair guides & tutorials</Text>
@@ -130,7 +138,13 @@ const HomeScreen: React.FC = () => {
         </View>
 
         {/* Search Bar */}
-        <TouchableOpacity onPress={handleSearchFocus} activeOpacity={1}>
+        <TouchableOpacity
+          onPress={handleSearchFocus}
+          activeOpacity={1}
+          accessible={true}
+          accessibilityRole="search"
+          accessibilityLabel="Search"
+          accessibilityHint="Double tap to open search screen">
           <SearchBar
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -195,8 +209,12 @@ const HomeScreen: React.FC = () => {
               if (parentNav) {
                 parentNav.navigate('Library');
               }
-            }}>
-            <Text style={styles.quickAccessIcon}>📚</Text>
+            }}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="All Brands"
+            accessibilityHint="Double tap to browse all AC brands">
+            <Text style={styles.quickAccessIcon} importantForAccessibility="no">📚</Text>
             <Text style={styles.quickAccessLabel}>All Brands</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -206,8 +224,12 @@ const HomeScreen: React.FC = () => {
               if (parentNav) {
                 parentNav.navigate('Search');
               }
-            }}>
-            <Text style={styles.quickAccessIcon}>🔍</Text>
+            }}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Search"
+            accessibilityHint="Double tap to search for repair guides">
+            <Text style={styles.quickAccessIcon} importantForAccessibility="no">🔍</Text>
             <Text style={styles.quickAccessLabel}>Search</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -217,8 +239,12 @@ const HomeScreen: React.FC = () => {
               if (parentNav) {
                 parentNav.navigate('Profile');
               }
-            }}>
-            <Text style={styles.quickAccessIcon}>👤</Text>
+            }}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Profile"
+            accessibilityHint="Double tap to view your profile">
+            <Text style={styles.quickAccessIcon} importantForAccessibility="no">👤</Text>
             <Text style={styles.quickAccessLabel}>Profile</Text>
           </TouchableOpacity>
         </View>

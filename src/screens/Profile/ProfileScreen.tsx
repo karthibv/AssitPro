@@ -33,13 +33,13 @@ const ProfileScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Profile Header */}
-      <View style={styles.header}>
-        <View style={styles.avatarContainer}>
+      <View style={styles.header} accessible={true} accessibilityRole="summary">
+        <View style={styles.avatarContainer} importantForAccessibility="no">
           <Text style={styles.avatarText}>
             {user?.name?.charAt(0)?.toUpperCase() ?? '?'}
           </Text>
         </View>
-        <Text style={styles.name}>{user?.name ?? 'User'}</Text>
+        <Text style={styles.name} accessibilityRole="header">{user?.name ?? 'User'}</Text>
         <Text style={styles.email}>{user?.email ?? ''}</Text>
         <SubscriptionBadge
           isActive={user?.subscriptionActive ?? false}
@@ -49,9 +49,9 @@ const ProfileScreen: React.FC = () => {
 
       {/* Subscription Info */}
       <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Subscription</Text>
+        <Text style={styles.sectionTitle} accessibilityRole="header">Subscription</Text>
 
-        <View style={styles.infoRow}>
+        <View style={styles.infoRow} accessible={true} accessibilityLabel={`Plan: ${formatSubscriptionType(user?.subscriptionType ?? 'free')}`}>
           <Text style={styles.infoLabel}>Plan</Text>
           <Text style={styles.infoValue}>
             {formatSubscriptionType(user?.subscriptionType ?? 'free')}
@@ -60,7 +60,7 @@ const ProfileScreen: React.FC = () => {
 
         <View style={styles.divider} />
 
-        <View style={styles.infoRow}>
+        <View style={styles.infoRow} accessible={true} accessibilityLabel={`Status: ${user?.subscriptionActive ? 'Active' : 'Inactive'}`}>
           <Text style={styles.infoLabel}>Status</Text>
           <Text
             style={[
@@ -94,29 +94,30 @@ const ProfileScreen: React.FC = () => {
             }}
             variant="secondary"
             style={styles.upgradeButton}
+            accessibilityHint="Double tap to upgrade your subscription plan"
           />
         )}
       </Card>
 
       {/* Account Info */}
       <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Account</Text>
+        <Text style={styles.sectionTitle} accessibilityRole="header">Account</Text>
 
-        <View style={styles.infoRow}>
+        <View style={styles.infoRow} accessible={true} accessibilityLabel={`Name: ${user?.name ?? 'N/A'}`}>
           <Text style={styles.infoLabel}>Name</Text>
           <Text style={styles.infoValue}>{user?.name ?? 'N/A'}</Text>
         </View>
 
         <View style={styles.divider} />
 
-        <View style={styles.infoRow}>
+        <View style={styles.infoRow} accessible={true} accessibilityLabel={`Email: ${user?.email ?? 'N/A'}`}>
           <Text style={styles.infoLabel}>Email</Text>
           <Text style={styles.infoValue}>{user?.email ?? 'N/A'}</Text>
         </View>
 
         <View style={styles.divider} />
 
-        <View style={styles.infoRow}>
+        <View style={styles.infoRow} accessible={true} accessibilityLabel={`Member since: ${formatDate(user?.createdAt ?? null)}`}>
           <Text style={styles.infoLabel}>Member Since</Text>
           <Text style={styles.infoValue}>{formatDate(user?.createdAt ?? null)}</Text>
         </View>
@@ -124,7 +125,7 @@ const ProfileScreen: React.FC = () => {
 
       {/* App Info */}
       <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>App Info</Text>
+        <Text style={styles.sectionTitle} accessibilityRole="header">App Info</Text>
 
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Version</Text>
@@ -147,6 +148,7 @@ const ProfileScreen: React.FC = () => {
         isLoading={isLoading}
         style={styles.logoutButton}
         textStyle={styles.logoutText}
+        accessibilityHint="Double tap to sign out of your account"
       />
     </ScrollView>
   );

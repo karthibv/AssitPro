@@ -58,6 +58,7 @@ const MainTabNavigator: React.FC = () => {
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ focused }) => <TabIcon label="Home" focused={focused} />,
+          tabBarAccessibilityLabel: 'Home tab',
         }}
       />
       <Tab.Screen
@@ -65,6 +66,7 @@ const MainTabNavigator: React.FC = () => {
         component={ContentNavigator}
         options={{
           tabBarIcon: ({ focused }) => <TabIcon label="Library" focused={focused} />,
+          tabBarAccessibilityLabel: 'Content Library tab',
         }}
       />
       <Tab.Screen
@@ -72,6 +74,7 @@ const MainTabNavigator: React.FC = () => {
         component={SearchNavigator}
         options={{
           tabBarIcon: ({ focused }) => <TabIcon label="Search" focused={focused} />,
+          tabBarAccessibilityLabel: 'Search tab',
         }}
       />
       <Tab.Screen
@@ -79,6 +82,7 @@ const MainTabNavigator: React.FC = () => {
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ focused }) => <TabIcon label="Profile" focused={focused} />,
+          tabBarAccessibilityLabel: 'Profile tab',
         }}
       />
     </Tab.Navigator>
