@@ -19,7 +19,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   onAction,
 }) => {
   return (
-    <View style={styles.container} accessible={true} accessibilityRole="summary">
+    <View style={styles.container} accessibilityRole="summary">
       <Text style={styles.title} accessibilityRole="header">{title}</Text>
       <Text style={styles.message}>{message}</Text>
       {actionLabel && onAction && (

@@ -123,7 +123,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             accessibilityHint="Double tap to reset your password"
           />
 
-          <View style={styles.signupRow} accessible={true} accessibilityRole="text">
+          <View style={styles.signupRow}>
             <Text style={styles.signupText}>Don&apos;t have an account? </Text>
             <Button
               title="Sign Up"

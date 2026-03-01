@@ -157,7 +157,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             accessibilityHint="Double tap to create your account"
           />
 
-          <View style={styles.loginRow} accessible={true} accessibilityRole="text">
+          <View style={styles.loginRow}>
             <Text style={styles.loginText}>Already have an account? </Text>
             <Button
               title="Sign In"

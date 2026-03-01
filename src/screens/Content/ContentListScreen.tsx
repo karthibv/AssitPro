@@ -60,7 +60,7 @@ const ContentListScreen: React.FC<ContentListScreenProps> = ({ navigation, route
         {item.description}
       </Text>
 
-      <View style={styles.metaRow} accessible={true} accessibilityLabel={`${item.steps.length} steps, ${item.tools.length} tools, ${item.imageUrls.length} images, ${item.videoUrls.length} videos`}>
+      <View style={styles.metaRow} accessible={true} accessibilityLabel={[item.steps.length > 0 ? `${item.steps.length} steps` : '', item.tools.length > 0 ? `${item.tools.length} tools` : '', item.imageUrls.length > 0 ? `${item.imageUrls.length} images` : '', item.videoUrls.length > 0 ? `${item.videoUrls.length} videos` : ''].filter(Boolean).join(', ')}>
         {item.steps.length > 0 && (
           <View style={styles.metaItem}>
             <Text style={styles.metaText} importantForAccessibility="no">📋 {item.steps.length} steps</Text>

@@ -101,7 +101,7 @@ const HomeScreen: React.FC = () => {
       <Text style={styles.contentDescription} numberOfLines={2}>
         {item.description}
       </Text>
-      <View style={styles.contentMeta} accessible={true} accessibilityLabel={`${item.imageUrls.length > 0 ? `${item.imageUrls.length} images` : ''}${item.videoUrls.length > 0 ? `, ${item.videoUrls.length} videos` : ''}${item.steps.length > 0 ? `, ${item.steps.length} steps` : ''}`}>
+      <View style={styles.contentMeta} accessible={true} accessibilityLabel={[item.imageUrls.length > 0 ? `${item.imageUrls.length} images` : '', item.videoUrls.length > 0 ? `${item.videoUrls.length} videos` : '', item.steps.length > 0 ? `${item.steps.length} steps` : ''].filter(Boolean).join(', ')}>
         {item.imageUrls.length > 0 && (
           <Text style={styles.metaItem} importantForAccessibility="no">📷 {item.imageUrls.length}</Text>
         )}

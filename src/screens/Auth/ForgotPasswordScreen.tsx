@@ -61,7 +61,7 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ navigation 
   if (emailSent) {
     return (
       <View style={styles.container}>
-          <View style={styles.successContainer} accessible={true} accessibilityLiveRegion="polite">
+          <View style={styles.successContainer} accessibilityLiveRegion="polite">
             <Text style={styles.successIcon} importantForAccessibility="no">📧</Text>
             <Text style={styles.successTitle} accessibilityRole="header">Check Your Email</Text>
             <Text style={styles.successDescription}>
