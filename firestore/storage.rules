@@ -1,0 +1,59 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // =============================================
+    // Helper Functions
+    // =============================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // =============================================
+    // Circuit Images
+    // =============================================
+    match /images/{allPaths=**} {
+      // Authenticated users can read images
+      allow read: if isAuthenticated();
+
+      // Only admins can upload (managed via Firebase Console)
+      allow write: if false;
+    }
+
+    // =============================================
+    // Training Videos
+    // =============================================
+    match /videos/{allPaths=**} {
+      // Authenticated users can read videos
+      allow read: if isAuthenticated();
+
+      // Only admins can upload
+      allow write: if false;
+    }
+
+    // =============================================
+    // Brand Logos
+    // =============================================
+    match /logos/{allPaths=**} {
+      // Authenticated users can read logos
+      allow read: if isAuthenticated();
+
+      // Only admins can upload
+      allow write: if false;
+    }
+
+    // =============================================
+    // User Avatars (future use)
+    // =============================================
+    match /avatars/{userId}/{allPaths=**} {
+      // Users can read any avatar
+      allow read: if isAuthenticated();
+
+      // Users can only write their own avatar
+      allow write: if isAuthenticated() && request.auth.uid == userId
+        && request.resource.size < 5 * 1024 * 1024  // Max 5MB
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

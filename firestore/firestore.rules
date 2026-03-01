@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =============================================
+    // Helper Functions
+    // =============================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function hasActiveSubscription() {
+      return isAuthenticated()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.subscriptionActive == true;
+    }
+
+    // =============================================
+    // Users Collection
+    // =============================================
+    match /users/{userId} {
+      // Users can read their own profile
+      allow read: if isAuthenticated() && isOwner(userId);
+
+      // Users can create their own profile on signup
+      allow create: if isAuthenticated() && isOwner(userId);
+
+      // Users can update their own profile (except subscription fields)
+      allow update: if isAuthenticated() && isOwner(userId)
+        && !request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['subscriptionActive', 'subscriptionType', 'expiryDate']);
+
+      // Prevent deletion
+      allow delete: if false;
+    }
+
+    // =============================================
+    // Brands Collection
+    // =============================================
+    match /brands/{brandId} {
+      // Any authenticated user can read brands
+      allow read: if isAuthenticated();
+
+      // Only admins can write (managed via Firebase Console or Cloud Functions)
+      allow write: if false;
+    }
+
+    // =============================================
+    // Models Collection
+    // =============================================
+    match /models/{modelId} {
+      // Any authenticated user can read models
+      allow read: if isAuthenticated();
+
+      // Only admins can write
+      allow write: if false;
+    }
+
+    // =============================================
+    // Contents Collection
+    // =============================================
+    match /contents/{contentId} {
+      // Users with active subscription can read content
+      // Free users can read basic metadata (title, description, errorCode)
+      allow read: if isAuthenticated();
+
+      // Only admins can write
+      allow write: if false;
+    }
+  }
+}
